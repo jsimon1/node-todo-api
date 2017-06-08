@@ -25,9 +25,9 @@ MongoClient.connect('mongodb://localhost:27017/ToDoApp', (err, db) => {
   // });
 
   db.collection('Users').insertOne({
-    name: 'Jeremy Simon',
-    age: 19,
-    location: 'Montvale'
+    name: 'Austin Smith',
+    age: 20,
+    location: 'Draper'
   }, (err, res) => {
     if (err) {
       return console.log('Unable to insert user', err);
@@ -36,19 +36,6 @@ MongoClient.connect('mongodb://localhost:27017/ToDoApp', (err, db) => {
     console.log(res.ops[0]._id.getTimestamp());
   });
 
-  // MongoDB query
-  db.collection('Todos').find().count().then((count) => {
-    console.log(`Todos count: ${count}`);
-  }, (err) => {
-    console.log('Unable to fetch todos', err);
-  });
-
-  db.collection('Users').find().toArray().then((users) => {
-    console.log('Users:');
-    console.log(JSON.stringify(users, undefined, 2));
-  }, (err) => {
-    console.log('Unable to fetch users', err);
-  });
 
   //
   // db.collection('Todos').find({
