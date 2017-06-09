@@ -81,7 +81,23 @@ describe('GET /todos/:id', () => {
       .expect(200)
       .expect((res) => {
         expect(res.body.todo.text).toBe(todos[0].text)
-      });
+      })
+      .end(done);
   });
-  it('should return 404 when not found')
+  it('should return 404 when not found', (done) => {
+    var randomID = new ObjectID().toHexString();
+    request(app)
+      .get(`/todos/${randomID}`)
+      .expect(404)
+      .end(done);
+  });
+
+  // Remember, arrow functions dont have access to the natural this, so use old-school function syntax
+  // when in Mocha since context might be important
+  it('should return 404 for non-object ids', function(done) {
+    request(app)
+    .get(`/todos/593a323360853a1460c4f69da`)
+    .expect(404)
+    .end(done);
+  });
 });
