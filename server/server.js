@@ -12,6 +12,15 @@ app.use(bodyParser.json());
 
 // CRUD - Create, Read, Update, Delete
 
+app.get('/todos', (req, res) => {
+  Todo.find().then((todos) => {
+    // Use objects instead of arrays for future proofing (can bundle {todos: todos, extrathing: extra})
+    res.send({todos});
+  }, (err) => {
+    res.send(err);
+  });
+});
+
 app.post('/todos', (req, res) => {
   var todo = new Todo({
     text: req.body.text
