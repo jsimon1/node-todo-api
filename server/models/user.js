@@ -51,6 +51,29 @@ UserSchema.methods.generateAuthToken = function() {
     return token;
   });
 };
+// statics is different from methods. methods are for the user instances while statics are for the overall class
+UserSchema.statics.findByToken() = function (token) {
+  var User = this;
+  var decoded;
+
+  try {
+    decoded = jwt.verify(token, 'abc123');
+  } catch (err) {
+    User.findByToken(token).then((user) => {
+      if (!user) {
+
+      }
+      res.send(user);
+    });
+  }
+
+  return User.findOne({
+    '_id': decoded._id,
+    'tokens.token': token,
+    'tokens.access': 'auth'
+  });
+
+}
 
 // Validator shorthand, validator.isEmail implicitly returns the function call
 var User = mongoose.model('User', UserSchema);

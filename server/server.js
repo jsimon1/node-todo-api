@@ -101,9 +101,13 @@ app.delete('/todos/:id', (req, res) => {
 //     res.status(400).send();
 //   });
 // });
-
+// res.header = sending value back, req.header gets a variable from the client
 app.get('/users/me', (req,res) => {
+  var token = req.header('x-auth');
 
+  User.findByToken(token).then((user) => {
+
+  });
 });
 
 app.post('/users', (req, res) => {
