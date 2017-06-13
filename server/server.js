@@ -5,6 +5,7 @@ const {ObjectID} = require('mongodb');
 var {mongoose} = require('./db/mongoose');
 var {Todo} = require('./models/todo');
 var {User} = require('./models/user');
+var {authenticate} = require('./middleware/authenticate')
 var config = require('./config/config');
 
 var app = express();
@@ -102,12 +103,10 @@ app.delete('/todos/:id', (req, res) => {
 //   });
 // });
 // res.header = sending value back, req.header gets a variable from the client
-app.get('/users/me', (req,res) => {
-  var token = req.header('x-auth');
 
-  User.findByToken(token).then((user) => {
-
-  });
+// Adding in authenticate from authenticate.js, a middleware function for authentication by which the user functions are called to verify the token
+app.get('/users/me', authenticate, (req,res) => {
+  res.send(req.user);
 });
 
 app.post('/users', (req, res) => {

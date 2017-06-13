@@ -52,19 +52,14 @@ UserSchema.methods.generateAuthToken = function() {
   });
 };
 // statics is different from methods. methods are for the user instances while statics are for the overall class
-UserSchema.statics.findByToken() = function (token) {
+UserSchema.statics.findByToken = function (token) {
   var User = this;
   var decoded;
 
   try {
     decoded = jwt.verify(token, 'abc123');
   } catch (err) {
-    User.findByToken(token).then((user) => {
-      if (!user) {
-
-      }
-      res.send(user);
-    });
+    return Promise.reject();
   }
 
   return User.findOne({
